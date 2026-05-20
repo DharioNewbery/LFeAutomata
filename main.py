@@ -1,90 +1,70 @@
 import sys
+import re
+from pathlib import Path
+from dataclasses import dataclass, field
+
+from expressoes import *
+from tipificacao import *
+
 sys.stdout.reconfigure(encoding='utf-8')
 
-from enum import Enum
-from pathlib import Path
-from expressoes import *
-import re
+@dataclass
+class Ocorrencia:
+    n_linha: int
+    linha: str
+    valido: bool
 
-class Tipo(Enum):
-    CSV  = 0
-    LOG  = 1
-    TXT  = 2
-    CHAT = 3 
-    NDF  = -1
+@dataclass
+class Arquivo:
+    nome: str
+    tipo: 'Tipo'
+    n_linhas: int
+    ocorrencias: dict[str, list[Ocorrencia]] = field(default_factory=dict)
 
-# Identificando através da extensão do arquivo
-def definir_tipo(nome_arquivo: str) -> Tipo:
-    
-    if (nome_arquivo.endswith(".log")): return Tipo.LOG
-    if (nome_arquivo.endswith(".csv")): return Tipo.CSV
-    if (nome_arquivo.endswith(".txt")):
-        with open(nome_arquivo) as f:   return identificar_txt(f.read())
+    def adicionar_ocorrencia(self, tipo: str, ocorrencia: Ocorrencia):
+        self.ocorrencias.setdefault(tipo, []).append(ocorrencia)
 
-    return Tipo.NDF
-
-# Determina se o arquivo .txt é do tipo chat (CHAT) ou texto livre (TXT)
-def identificar_txt(conteudo) -> Tipo:
-    # transforma o texto em uma amostra de linhas.
-    tamanho_amostra = 30
-    amostra = conteudo.splitlines()[:tamanho_amostra]
-
-    # contador de pontuação para verificar qual tipo de arquivo tá sendo tratado.
-    pontuacao = 0
-
-    #expressão regular para chat ( peguei da internet mesmo )
-    padrao_chat = r'^\[\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\]\s.+:'
-
-    for linha in amostra:
-        if re.match(padrao_chat, linha):
-            pontuacao += 3
-
-    if pontuacao < tamanho_amostra / 2:
-        return Tipo.TXT
-
-    return Tipo.CHAT
-
-def main():
-    arquivos = [f for f in Path('./arquivos').iterdir() if f.is_file()]
+# Coleta os dados de todos os arquivos disponíveis no diretório
+def coletar_dados(dir: Path) -> list[Arquivo]:
+    arquivos = [f for f in dir.iterdir() if f.is_file()]
+    dados = []
 
     for arquivo in arquivos:
         tipo = definir_tipo(str(arquivo))
 
-        conteudo = ""
+        linhas = []
         with open(arquivo, "r", encoding="utf-8") as f:
             conteudo = f.read()
+            linhas = conteudo.splitlines()
 
-        linhas = conteudo.splitlines()
-
-        with open(f"resultados/{arquivo.name}", "w", encoding="utf-8") as f:
-            f.write(f"Arquivo: {arquivo}\n")
-            f.write(f"Quantidade de linhas: {len(linhas)}\n")
-            f.write(f"Tipo identificado: {tipo.name}\n")
-            f.write("\nAmostra do conteúdo:\n")
-
-            for linha in linhas[:5]:
-                f.write(linha + '\n')
-            f.write("\n\n\n")
-            f.write("Ocorrencias:")
-
-            for nome, expressao in expressoes.items():
-                f.write(f"\n\n================ {nome} ================\n")
-
-                for num, linha in enumerate(linhas, 1):
-                    for item in re.finditer(expressao, linha):
-                        f.write(f"{num} {item.group()}\n")
+        n_linhas = len(linhas)
+        nova_entrada = Arquivo(str(arquivo), tipo, n_linhas)
 
 
-            """
-            for nome, expressao in expressoes.items():
-
-                f.write(f"\n\n================ {nome} ================\n")
-                for item in re.finditer(expressao, conteudo):
-
-                    num_linha = conteudo.count('\n', 0, item.start()) + 1
-                    f.write(f"{num_linha} {item.group()}\n")
-            """
+        # checa linha por linha
+        for num, linha in enumerate(linhas, 1):
+            # para todas as expressões regulares permissivas
+            for nome, expressao in expressoes_permissivas.items():
+                # encontra todas as ocorrencias na linha
+                for caso in re.finditer(expressao, linha):
+                    # verifica se a ocorrencia é passível de validação
+                    if (nome in expressoes_validadoras):
+                        # valida e registra a ocorrencia
+                        if not re.match(expressoes_validadoras[nome], caso.group()): 
+                            nova_ocorrencia = Ocorrencia(num, linha, False) 
+                        else:
+                            nova_ocorrencia = Ocorrencia(num, linha, True)
+                        nova_entrada.adicionar_ocorrencia(nome, nova_ocorrencia)
         
+        dados.append(nova_entrada)
+    
+    return dados
 
+
+def main():
+    pasta = Path("./arquivos/")
+    dados = coletar_dados(pasta)
+
+        
 if (__name__ == "__main__"):
     main()

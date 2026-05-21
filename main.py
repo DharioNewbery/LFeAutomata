@@ -69,8 +69,37 @@ def main():
     pasta = Path("./arquivos/")
     dados = coletar_dados(pasta)
 
-    print(dados) 
+    for arquivo in dados:
+        print("\n" + "=" * 100)
+        print(f"ARQUIVO: {arquivo.nome}")
+        print(f"TIPO DO ARQUIVO: {arquivo.tipo}")
+        print(f"NÚMERO DE LINHAS: {arquivo.n_linhas}")
+        print("=" * 100)
 
+        if not arquivo.ocorrencias:
+            print("Nenhuma ocorrência encontrada.")
+            continue
+
+        for tipo, ocorrencias in arquivo.ocorrencias.items():
+            total = len(ocorrencias)
+            validas = sum(1 for o in ocorrencias if o.valido)
+            invalidas = sum(1 for o in ocorrencias if not o.valido)
+
+            print("\n" + "-" * 100)
+            print(f"TIPO DE DADO: {tipo}")
+            print(f"TOTAL: {total}")
+            print(f"VÁLIDAS: {validas}")
+            print(f"INVÁLIDAS: {invalidas}")
+            print("-" * 100)
+
+            for ocorrencia in ocorrencias:
+                status = "VÁLIDO" if ocorrencia.valido else "INVÁLIDO"
+
+                print(f"Linha: {ocorrencia.n_linha}")
+                print(f"Valor extraído: {ocorrencia.valor}")
+                print(f"Classificação: {status}")
+                print(f"Linha original: {ocorrencia.linha}")
+                print("-" * 100)
     
 if (__name__ == "__main__"):
     main()

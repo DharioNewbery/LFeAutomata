@@ -13,6 +13,7 @@ class Ocorrencia:
     n_linha: int
     linha: str
     valido: bool
+    valor: str
 
 @dataclass
 class Arquivo:
@@ -47,14 +48,17 @@ def coletar_dados(dir: Path) -> list[Arquivo]:
             for nome, expressao in expressoes_permissivas.items():
                 # encontra todas as ocorrencias na linha
                 for caso in re.finditer(expressao, linha):
+                    valor = caso.group()
                     # verifica se a ocorrencia é passível de validação
                     if (nome in expressoes_validadoras):
-                        # valida e registra a ocorrencia
-                        if not re.match(expressoes_validadoras[nome], caso.group()): 
-                            nova_ocorrencia = Ocorrencia(num, linha, False) 
-                        else:
-                            nova_ocorrencia = Ocorrencia(num, linha, True)
-                        nova_entrada.adicionar_ocorrencia(nome, nova_ocorrencia)
+                        # valida a ocorrencia
+                        valido = bool(re.match(expressoes_validadoras[nome],valor))
+                    else:
+                        valido = True
+                        
+                    # registra a ocorrencia
+                    nova_ocorrencia = Ocorrencia(n_linha=num, linha=linha, valor=valor, valido=valido)
+                    nova_entrada.adicionar_ocorrencia(nome, nova_ocorrencia)
         
         dados.append(nova_entrada)
     
@@ -65,6 +69,8 @@ def main():
     pasta = Path("./arquivos/")
     dados = coletar_dados(pasta)
 
-        
+    print(dados) 
+
+    
 if (__name__ == "__main__"):
     main()

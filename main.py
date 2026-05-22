@@ -63,6 +63,8 @@ def coletar_dados(dir: Path) -> list[Arquivo]:
     
     return dados
 
+# função pra listar as ocorrencias em um txt
+# abre um arquivo e lista as ocorrencias com numero da linha, valor extraido, classificação, e a linha original
 def exportar_ocorrencias(dados: list[Arquivo]):
     with open("ocorrencias.txt", "w", encoding="utf-8") as arquivo_saida:
         arquivo_saida.write("=" * 100 + "\n")
@@ -75,10 +77,6 @@ def exportar_ocorrencias(dados: list[Arquivo]):
             arquivo_saida.write(f"Arquivo: {arquivo.nome}\n")
             arquivo_saida.write("=" * 100 + "\n")
 
-            if not arquivo.ocorrencias:
-                arquivo_saida.write("nenhuma ocorrencia encontrada")
-                continue
-            
             for tipo, ocorrencias in arquivo.ocorrencias.items():
                 arquivo_saida.write("\n")
                 arquivo_saida.write("-" * 100 + "\n")
@@ -101,20 +99,24 @@ def exportar_ocorrencias(dados: list[Arquivo]):
 def main():
     pasta = Path("./arquivos/")
     dados = coletar_dados(pasta)
-   
+    
+    # declara dicionario para guardar as estatisticas e variavel para o todal de dados
     estatisticas = {}
     total_dados = 0
-
+    
     for arquivos in dados:
+        # para cada arquivo percorre os tipos e as ocorrencia
         for tipo,ocorrencias in arquivos.ocorrencias.items():
+            # se o tipo ainda não tem entrada no dicionario de estatisticas cria uma nova zerada
             if tipo not in estatisticas:
                 estatisticas[tipo] = {
                     "total": 0,
                     "validas": 0,
                     "invalidas": 0,
+                    # distribuição das ocorrencias
                     "quantidade_por_arquivo": {}
                 }
-
+            # se o arquivo ainda não tem entrada em estatisticas cria uma nova zerada
             if arquivos.nome not in estatisticas[tipo]["quantidade_por_arquivo"]:
                 estatisticas[tipo]["quantidade_por_arquivo"][arquivos.nome] = {
                     "total" : 0,
@@ -122,6 +124,7 @@ def main():
                     "invalidas": 0
             }
 
+            # faz o levantamento de ocorrencias vailidas e invalidas e o numero total de ocorrencia daquele tipo
             for ocorrencia in ocorrencias:
                 estatisticas[tipo]["total"] += 1
                 estatisticas[tipo]["quantidade_por_arquivo"][arquivos.nome]["total"] += 1
@@ -139,7 +142,8 @@ def main():
     print("=" * 100)
 
     print(f"total de dados: {total_dados}")
-        
+    
+    # para cada tipo, extrai numeros e calcula porcentagem geral
     for tipo,info in estatisticas.items():
         total = info["total"]
         validas = info["validas"]
@@ -159,13 +163,15 @@ def main():
 
         print("\nDistribuição por arquivo: ")
         print("-" * 100)
-
+        
+        # ordena os arquivos do arquivo com o maior numero de ocorrencia para o menor
         arquivos_ordenados = sorted(
             info["quantidade_por_arquivo"].items(),
             key=lambda item: item[1]["total"],
             reverse=True
         )
         
+        # imprime relatório individual de cada tipo
         for nome_arquivo, dados_arquivo in arquivos_ordenados:
             total_arquivo = dados_arquivo["total"]
             validas_arquivo = dados_arquivo["validas"]
@@ -179,7 +185,7 @@ def main():
             print(f"Válidas: {validas_arquivo}")
             print(f"Inválidas: {invalidas_arquivo}")
             print(f"Taxa de inválidas: {porcentagem_invalida_arquivo:.2f}%")
-            print(f"Taxa de nválidas: {porcentagem_valida_arquivo:.2f}%")
+            print(f"Taxa de válidas: {porcentagem_valida_arquivo:.2f}%")
     exportar_ocorrencias(dados)
 
              

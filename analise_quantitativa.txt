@@ -1,0 +1,366 @@
+====================================================================================================
+ANÁLISE QUANTITATIVA
+====================================================================================================
+
+TOTAL DE DADOS: 138174
+TOTAL DE OCORRÊNCIAS VÁLIDAS: 133659
+TOTAL DE OCORRÊNCIAS INVÁLIDAS: 4515
+
+====================================================================================================
+TIPO DO DADO: linha_csv
+====================================================================================================
+TOTAL: 5001
+VÁLIDAS: 4561 (91.20%)
+INVÁLIDAS: 440 (8.80%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 5001
+Válidas: 4561
+Inválidas: 440
+Taxa de válidas: 91.20%
+Taxa de inválidas: 8.80%
+
+====================================================================================================
+TIPO DO DADO: telefone
+====================================================================================================
+TOTAL: 13570
+VÁLIDAS: 10969 (80.83%)
+INVÁLIDAS: 2601 (19.17%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 5275
+Válidas: 4211
+Inválidas: 1064
+Taxa de válidas: 79.83%
+Taxa de inválidas: 20.17%
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 5074
+Válidas: 4169
+Inválidas: 905
+Taxa de válidas: 82.16%
+Taxa de inválidas: 17.84%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 1861
+Válidas: 1502
+Inválidas: 359
+Taxa de válidas: 80.71%
+Taxa de inválidas: 19.29%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 1360
+Válidas: 1087
+Inválidas: 273
+Taxa de válidas: 79.93%
+Taxa de inválidas: 20.07%
+
+====================================================================================================
+TIPO DO DADO: email
+====================================================================================================
+TOTAL: 13957
+VÁLIDAS: 13259 (95.00%)
+INVÁLIDAS: 698 (5.00%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 5603
+Válidas: 5320
+Inválidas: 283
+Taxa de válidas: 94.95%
+Taxa de inválidas: 5.05%
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 4333
+Válidas: 4129
+Inválidas: 204
+Taxa de válidas: 95.29%
+Taxa de inválidas: 4.71%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 2328
+Válidas: 2190
+Inválidas: 138
+Taxa de válidas: 94.07%
+Taxa de inválidas: 5.93%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 1693
+Válidas: 1620
+Inválidas: 73
+Taxa de válidas: 95.69%
+Taxa de inválidas: 4.31%
+
+====================================================================================================
+TIPO DO DADO: data
+====================================================================================================
+TOTAL: 22473
+VÁLIDAS: 22473 (100.00%)
+INVÁLIDAS: 0 (0.00%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 11145
+Válidas: 11145
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 4927
+Válidas: 4927
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 4530
+Válidas: 4530
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 1871
+Válidas: 1871
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+====================================================================================================
+TIPO DO DADO: valor_monetario
+====================================================================================================
+TOTAL: 7987
+VÁLIDAS: 7987 (100.00%)
+INVÁLIDAS: 0 (0.00%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 4929
+Válidas: 4929
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 1513
+Válidas: 1513
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 920
+Válidas: 920
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 625
+Válidas: 625
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+====================================================================================================
+TIPO DO DADO: nome
+====================================================================================================
+TOTAL: 19094
+VÁLIDAS: 19094 (100.00%)
+INVÁLIDAS: 0 (0.00%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 5639
+Válidas: 5639
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 5573
+Válidas: 5573
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 4665
+Válidas: 4665
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 3217
+Válidas: 3217
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+====================================================================================================
+TIPO DO DADO: horario
+====================================================================================================
+TOTAL: 22474
+VÁLIDAS: 22474 (100.00%)
+INVÁLIDAS: 0 (0.00%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 11145
+Válidas: 11145
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 4927
+Válidas: 4927
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 4530
+Válidas: 4530
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 1871
+Válidas: 1871
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/.~lock.01_atendimentos_baguncados.txt#
+Total: 1
+Válidas: 1
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+====================================================================================================
+TIPO DO DADO: data_horario
+====================================================================================================
+TOTAL: 22473
+VÁLIDAS: 22473 (100.00%)
+INVÁLIDAS: 0 (0.00%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 11145
+Válidas: 11145
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 4927
+Válidas: 4927
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 4530
+Válidas: 4530
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 1871
+Válidas: 1871
+Inválidas: 0
+Taxa de válidas: 100.00%
+Taxa de inválidas: 0.00%
+
+====================================================================================================
+TIPO DO DADO: cpf
+====================================================================================================
+TOTAL: 8421
+VÁLIDAS: 7766 (92.22%)
+INVÁLIDAS: 655 (7.78%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/04_exportacao_suja.csv
+Total: 4269
+Válidas: 3927
+Inválidas: 342
+Taxa de válidas: 91.99%
+Taxa de inválidas: 8.01%
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 2781
+Válidas: 2575
+Inválidas: 206
+Taxa de válidas: 92.59%
+Taxa de inválidas: 7.41%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 816
+Válidas: 754
+Inválidas: 62
+Taxa de válidas: 92.40%
+Taxa de inválidas: 7.60%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 555
+Válidas: 510
+Inválidas: 45
+Taxa de válidas: 91.89%
+Taxa de inválidas: 8.11%
+
+====================================================================================================
+TIPO DO DADO: url
+====================================================================================================
+TOTAL: 2724
+VÁLIDAS: 2603 (95.56%)
+INVÁLIDAS: 121 (4.44%)
+
+DISTRIBUIÇÃO POR ARQUIVO:
+----------------------------------------------------------------------------------------------------
+
+Arquivo: arquivos/02_logs_mistos.log
+Total: 1357
+Válidas: 1294
+Inválidas: 63
+Taxa de válidas: 95.36%
+Taxa de inválidas: 4.64%
+
+Arquivo: arquivos/01_atendimentos_baguncados.txt
+Total: 833
+Válidas: 798
+Inválidas: 35
+Taxa de válidas: 95.80%
+Taxa de inválidas: 4.20%
+
+Arquivo: arquivos/03_mensagens_chat.txt
+Total: 534
+Válidas: 511
+Inválidas: 23
+Taxa de válidas: 95.69%
+Taxa de inválidas: 4.31%

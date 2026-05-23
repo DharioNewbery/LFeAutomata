@@ -2,7 +2,7 @@
 
 Este repositório contém o código-fonte desenvolvido para o trabalho prático da disciplina de Linguagens Formais e Autômatos. O objetivo do projeto é utilizar Expressões Regulares (Regex) para identificar, extrair e validar padrões textuais e estruturas de dados em diversos arquivos textuais brutos.
 
-## Descrição do Projeto
+## Descrição do Trabalho
 
 O sistema realiza a leitura de arquivos de entrada (como logs de servidores, conversas de chat, planilhas CSV e textos livres), identifica o tipo de arquivo analisado e varre linha por linha em busca de padrões pré-definidos de informação. O validador diferencia padrões gerais de formatos estritamente válidos, calculando a integridade estatística dos dados processados.
 
@@ -76,7 +76,7 @@ Este projeto foi construído utilizando exclusivamente a biblioteca padrão do P
 python main.py
 ```
 
-*(Caso o sistema utilize comandos específicos de versão, pode ser necessário executar `python3 main.py`).*
+
 
 ### Resultados Esperados
 Após o término do script, o programa salvará os seguintes arquivos na raiz do projeto:

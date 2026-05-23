@@ -12,8 +12,8 @@ sys.stdout.reconfigure(encoding='utf-8')
 class Ocorrencia:
     n_linha: int
     linha: str
-    valido: bool
     valor: str
+    valido: bool
 
 @dataclass
 class Arquivo:
@@ -41,14 +41,24 @@ def coletar_dados(dir: Path) -> list[Arquivo]:
         n_linhas = len(linhas)
         nova_entrada = Arquivo(str(arquivo), tipo, n_linhas)
 
+        num_colunas = linhas[0].count(";")
 
         # checa linha por linha
         for num, linha in enumerate(linhas, 1):
+
+            if (tipo == Tipo.CSV):
+                contador = linha.count(";")
+                nova_ocorrencia_csv = Ocorrencia(n_linha=num, linha=linha, valor=f"{contador} colunas", valido= (num_colunas == contador))
+                nova_entrada.adicionar_ocorrencia("linha_csv", nova_ocorrencia_csv)
+
             # para todas as expressões regulares permissivas
             for nome, expressao in expressoes_permissivas.items():
                 # encontra todas as ocorrencias na linha
                 for caso in re.finditer(expressao, linha):
                     # verifica se a ocorrencia é passível de validação
+                    valor = caso.group()
+
+                    nova_ocorrencia: Ocorrencia
                     if (nome in expressoes_validadoras):
                         valor = caso.group()
 
@@ -57,7 +67,13 @@ def coletar_dados(dir: Path) -> list[Arquivo]:
                         
                         # registra a ocorrencia
                         nova_ocorrencia = Ocorrencia(n_linha=num, linha=linha, valor=valor, valido=valido)
-                        nova_entrada.adicionar_ocorrencia(nome, nova_ocorrencia)
+                    else:
+
+                        # Registra a ocorrencia sem validação cadastrada
+                        nova_ocorrencia = Ocorrencia(n_linha=num, linha=linha, valor=valor, valido=True)
+
+                    nova_entrada.adicionar_ocorrencia(nome, nova_ocorrencia)
+                    
         
         dados.append(nova_entrada)
     

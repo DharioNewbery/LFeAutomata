@@ -236,6 +236,7 @@ def main():
      
     analise = gerar_analise_quantitativa(dados)
     exportar_analise_quantitava(analise)
+    exportar_ocorrencias(dados)
              
 if (__name__ == "__main__"):
     main()

@@ -31,13 +31,13 @@ LFeAutomata/
 ## Descrição dos Arquivos de Código
 
 ### main.py
-É o ponto de entrada do programa. Ele lê os arquivos na pasta `arquivos/`, faz a classificação do tipo de cada um, executa as buscas e validações por expressões regulares de cada linha, e realiza a validação de formatação de colunas em arquivos CSV. Ao final, gera os dois relatórios de saída.
+Lê os arquivos na pasta `arquivos/`, faz a classificação do tipo de cada um, executa as buscas e validações por expressões regulares de cada linha, e realiza a validação de formatação de colunas em arquivos CSV. Ao final, gera os dois relatórios de saída.
 
 ### expressoes.py
 Centraliza todas as expressões regulares do projeto:
-* **expressoes_arquivo**: Padrões usados para reconhecer a estrutura interna de linhas (como o cabeçalho de mensagens de chat).
-* **expressoes_permissivas**: Regex flexíveis usadas para capturar potenciais candidatos de informação (ex. qualquer e-mail ou CPF, mesmo com formatação incorreta).
-* **expressoes_validadoras**: Regex rígidas utilizadas para certificar se os dados capturados estão no formato correto especificado (ex. e-mail formal, CPF com máscara padrão).
+* **expressoes_arquivo**
+* **expressoes_permissivas**
+* **expressoes_validadoras**
 
 ### tipificacao.py
 Implementa a lógica para definir o tipo de arquivo de entrada. Arquivos `.log` e `.csv` são tipificados pela extensão. Arquivos `.txt` passam por uma análise de amostragem estatística das primeiras 30 linhas para determinar se trata-se de um chat estruturado (padrão `CHAT`) ou um texto comum (`TXT`).

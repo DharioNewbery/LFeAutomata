@@ -112,98 +112,130 @@ def exportar_ocorrencias(dados: list[Arquivo]):
                     arquivo_saida.write("-" * 100 + "\n")
 
 
-def main():
-    pasta = Path("./arquivos/")
-    dados = coletar_dados(pasta)
-    
-    # declara dicionario para guardar as estatisticas e variavel para o todal de dados
+def gerar_analise_quantitativa(dados: list[Arquivo]):
     estatisticas = {}
     total_dados = 0
-    
-    for arquivos in dados:
-        # para cada arquivo percorre os tipos e as ocorrencia
-        for tipo,ocorrencias in arquivos.ocorrencias.items():
-            # se o tipo ainda não tem entrada no dicionario de estatisticas cria uma nova zerada
+    total_validas = 0
+    total_invalidas = 0
+
+    for arquivo in dados:
+        for tipo, ocorrencias in arquivo.ocorrencias.items():
             if tipo not in estatisticas:
                 estatisticas[tipo] = {
                     "total": 0,
                     "validas": 0,
                     "invalidas": 0,
-                    # distribuição das ocorrencias
                     "quantidade_por_arquivo": {}
-                }
-            # se o arquivo ainda não tem entrada em estatisticas cria uma nova zerada
-            if arquivos.nome not in estatisticas[tipo]["quantidade_por_arquivo"]:
-                estatisticas[tipo]["quantidade_por_arquivo"][arquivos.nome] = {
-                    "total" : 0,
+                } 
+            
+            if arquivo.nome not in estatisticas[tipo]["quantidade_por_arquivo"]:
+                estatisticas[tipo]["quantidade_por_arquivo"][arquivo.nome] = {
+                    "total": 0,
                     "validas": 0,
-                    "invalidas": 0
-            }
+                    "invalidas": 0,
+                }
 
-            # faz o levantamento de ocorrencias vailidas e invalidas e o numero total de ocorrencia daquele tipo
             for ocorrencia in ocorrencias:
                 estatisticas[tipo]["total"] += 1
-                estatisticas[tipo]["quantidade_por_arquivo"][arquivos.nome]["total"] += 1
+                estatisticas[tipo]["quantidade_por_arquivo"][arquivo.nome]["total"] += 1
                 total_dados += 1
 
                 if ocorrencia.valido:
                     estatisticas[tipo]["validas"] += 1
-                    estatisticas[tipo]["quantidade_por_arquivo"][arquivos.nome]["validas"] += 1
+                    estatisticas[tipo]["quantidade_por_arquivo"][arquivo.nome]["validas"] += 1
+                    total_validas += 1
                 else:
                     estatisticas[tipo]["invalidas"] += 1
-                    estatisticas[tipo]["quantidade_por_arquivo"][arquivos.nome]["invalidas"] += 1
+                    estatisticas[tipo]["quantidade_por_arquivo"][arquivo.nome]["invalidas"] += 1
+                    total_invalidas += 1
 
-    print("\n" + "=" * 100)
-    print("Analise quantitativa")
-    print("=" * 100)
+    return {
+        "estatisticas": estatisticas,
+        "total_dados": total_dados,
+        "total_validas": total_validas,
+        "total_invalidas": total_invalidas
+    }
 
-    print(f"total de dados: {total_dados}")
-    
-    # para cada tipo, extrai numeros e calcula porcentagem geral
-    for tipo,info in estatisticas.items():
-        total = info["total"]
-        validas = info["validas"]
-        invalidas = info["invalidas"]
 
-        porcentagem_validas = (validas / total) * 100
-        porcentagem_invalidas = (invalidas / total) * 100
-        
-        print("\n" + "=" * 100)
-        print(f"tipo do dado: {tipo}")
-        print("=" *100)
+def exportar_analise_quantitava(analise: dict):
+    estatisticas = analise["estatisticas"]
 
-        print(f"TOTAL: {total}")
-        print(f"VÁLIDAS: {validas} ({porcentagem_validas:.2f}%)")
-        print(f"INVÁLIDAS: {invalidas} ({porcentagem_invalidas:.2f}%)")
-        
+    with open("analise_quantitativa.txt", "w", encoding="utf-8") as arquivo_saida:
+        arquivo_saida.write("=" * 100 + "\n")
+        arquivo_saida.write("ANÁLISE QUANTITATIVA\n")
+        arquivo_saida.write("=" * 100 + "\n\n")
 
-        print("\nDistribuição por arquivo: ")
-        print("-" * 100)
-        
-        # ordena os arquivos do arquivo com o maior numero de ocorrencia para o menor
-        arquivos_ordenados = sorted(
-            info["quantidade_por_arquivo"].items(),
-            key=lambda item: item[1]["total"],
-            reverse=True
-        )
-        
-        # imprime relatório individual de cada tipo
-        for nome_arquivo, dados_arquivo in arquivos_ordenados:
-            total_arquivo = dados_arquivo["total"]
-            validas_arquivo = dados_arquivo["validas"]
-            invalidas_arquivo = dados_arquivo["invalidas"]
+        arquivo_saida.write(f"TOTAL DE DADOS: {analise['total_dados']}\n")
+        arquivo_saida.write(f"TOTAL DE OCORRÊNCIAS VÁLIDAS: {analise['total_validas']}\n")
+        arquivo_saida.write(f"TOTAL DE OCORRÊNCIAS INVÁLIDAS: {analise['total_invalidas']}\n")
 
-            porcentagem_invalida_arquivo = (invalidas_arquivo / total_arquivo) * 100
-            porcentagem_valida_arquivo = (validas_arquivo / total_arquivo) * 100
+        for tipo, info in estatisticas.items():
+            total = info["total"]
+            validas = info["validas"]
+            invalidas = info["invalidas"]
 
-            print(f"\nArquivo: {nome_arquivo}")
-            print(f"Total: {total_arquivo}")
-            print(f"Válidas: {validas_arquivo}")
-            print(f"Inválidas: {invalidas_arquivo}")
-            print(f"Taxa de inválidas: {porcentagem_invalida_arquivo:.2f}%")
-            print(f"Taxa de válidas: {porcentagem_valida_arquivo:.2f}%")
-    exportar_ocorrencias(dados)
+            porcentagem_validas = (validas / total) * 100 if total > 0 else 0
+            porcentagem_invalidas = (invalidas / total) * 100 if total > 0 else 0
 
+            arquivo_saida.write("\n" + "=" * 100 + "\n")
+            arquivo_saida.write(f"TIPO DO DADO: {tipo}\n")
+            arquivo_saida.write("=" * 100 + "\n")
+
+            arquivo_saida.write(f"TOTAL: {total}\n")
+            arquivo_saida.write(
+                f"VÁLIDAS: {validas} ({porcentagem_validas:.2f}%)\n"
+            )
+
+            arquivo_saida.write(
+                f"INVÁLIDAS: {invalidas} ({porcentagem_invalidas:.2f}%)\n"
+            )
+
+            arquivo_saida.write("\nDISTRIBUIÇÃO POR ARQUIVO:\n")
+            arquivo_saida.write("-" * 100 + "\n")
+
+            arquivos_ordenados = sorted(
+                info["quantidade_por_arquivo"].items(),
+                key=lambda item: item[1]["total"],
+                reverse=True
+            )
+
+            for nome_arquivo, dados_arquivo in arquivos_ordenados:
+
+                total_arquivo = dados_arquivo["total"]
+                validas_arquivo = dados_arquivo["validas"]
+                invalidas_arquivo = dados_arquivo["invalidas"]
+
+                porcentagem_validas_arquivo = (
+                    (validas_arquivo / total_arquivo) * 100
+                    if total_arquivo > 0 else 0
+                )
+
+                porcentagem_invalidas_arquivo = (
+                    (invalidas_arquivo / total_arquivo) * 100
+                    if total_arquivo > 0 else 0
+                )
+
+                arquivo_saida.write(f"\nArquivo: {nome_arquivo}\n")
+                arquivo_saida.write(f"Total: {total_arquivo}\n")
+                arquivo_saida.write(f"Válidas: {validas_arquivo}\n")
+                arquivo_saida.write(f"Inválidas: {invalidas_arquivo}\n")
+
+                arquivo_saida.write(
+                    f"Taxa de válidas: {porcentagem_validas_arquivo:.2f}%\n"
+                )
+
+                arquivo_saida.write(
+                    f"Taxa de inválidas: {porcentagem_invalidas_arquivo:.2f}%\n"
+                )
+            
+
+
+def main():
+    pasta = Path("./arquivos/")
+    dados = coletar_dados(pasta)
+     
+    analise = gerar_analise_quantitativa(dados)
+    exportar_analise_quantitava(analise)
              
 if (__name__ == "__main__"):
     main()
